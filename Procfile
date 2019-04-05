@@ -1,1 +1,1 @@
-web gunicorn app:Controllers/app
+web gunicorn app:app
