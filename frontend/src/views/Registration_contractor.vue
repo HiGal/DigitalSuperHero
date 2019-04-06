@@ -42,6 +42,7 @@
         <b-form-input
           id="phone"
           v-model="form.phone"
+          type="text"
           required
           placeholder="79999999999"
         ></b-form-input>

@@ -1,14 +1,12 @@
 .registration_form {
     margin: 3% 30% 0;
     width: 40%;
-    position: fixed;
 }
 
 .login_form {
     margin: 3% 30% 0;
     width: 40%;
     font-size: 25px;
-    position: fixed;
 }
 
 img {
@@ -32,6 +30,10 @@ img {
     font-size: 25px;
 }
 
+.container {
+    width: 100%;
+}
+
 .header-top {
 
     max-height: 120px;
@@ -41,8 +43,11 @@ img {
 .header-top a {
     width: 203px;
     height: 54px;
+
     background: url(http://gridcom-rt.ru.opt-css.1c-bitrix-cdn.ru/bitrix/templates/gridcom2/images/logo.png) left top no-repeat;
+
     display: block;
+
     margin-right: 20px;
 }
 
@@ -52,7 +57,7 @@ img {
     line-height: 20px;
 }
 
-#phone {
+.phone {
     font: normal 25px 'Exo 2 Semi Bold';
     color: #333;
 }
@@ -82,11 +87,17 @@ img {
     width: 100%;
 }
 
+.top-panel {
+    background-color: white;
+    position: fixed;
+    height: 100%;
+}
 .item{
     min-height: 300px;
     object-fit: cover;
 }
 
-.home{
+.home {
     width: 100%;
 }
+
