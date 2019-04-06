@@ -1,5 +1,5 @@
 <template>
-    <div id="kanban">
+    <div id="kanban" class="kanban">
         <section class="section">
             <h4>
                 Задачи

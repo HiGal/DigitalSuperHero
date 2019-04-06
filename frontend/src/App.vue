@@ -6,16 +6,16 @@
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav  >
                     <b-nav-item  href="#">
-                        <router-link style="color: white" to="/">Home</router-link>
+                        <router-link style="color: white" to="/">Домой</router-link>
                     </b-nav-item>
                     <b-nav-item href="#">
-                        <router-link style="color: white" to="/login">Login</router-link>
+                        <router-link style="color: white" to="/login">Личный кабинет</router-link>
                     </b-nav-item>
                     <b-nav-item href="#">
-                        <router-link style="color: white" to="/registration_contractor">Registration_contractor</router-link>
+                        <router-link style="color: white" to="/registration_contractor">Зарегистрироваться как подрядчик</router-link>
                     </b-nav-item>
                     <b-nav-item href="#">
-                        <router-link style="color: white" to="/registration_customer">Registration_customer</router-link>
+                        <router-link style="color: white" to="/registration_customer">Зарегистрироваться как заказчик</router-link>
                     </b-nav-item>
 
                 </b-navbar-nav>

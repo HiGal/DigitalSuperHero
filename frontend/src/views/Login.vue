@@ -1,10 +1,11 @@
 <template>
   <div class="login_form">
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+    <b-form @submit="onSubmit" v-if="show">
       <b-form-group label="Войти в личный кабинет">
+      </b-form-group>
         <b-form-group>
           <b-form-select
-            id="input-3"
+            id="role"
             v-model="form.role"
             :options="roles"
             required
@@ -13,11 +14,11 @@
 
         <b-form-group>
           <b-form-input
-            id="login"
-            v-model="form.login"
-            type="login"
+            id="email"
+            v-model="form.email"
+            type="email"
             required
-            placeholder="Логин"
+            placeholder="E-mail"
           ></b-form-input>
         </b-form-group>
         <b-form-group>
@@ -29,33 +30,34 @@
             placeholder="Пароль"
           ></b-form-input>
         </b-form-group>
-
-        <b-button type="submit" variant="primary">Войти</b-button>
+        <b-form-group>
+        <b-form-input
+                id="cpassword"
+                v-model="form.cpassword"
+                type="cpassword"
+                required
+                placeholder="Подтвердите пароль"
+        ></b-form-input>
       </b-form-group>
+        <b-button type="submit" variant="primary">Войти</b-button>
     </b-form>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import router from "../router";
 export default {
   name: "login",
   data() {
     return {
       form: {
         role: "",
-        login: "",
-        password: ""
+        email: "",
+        password: "",
+        cpassword: ""
       },
-      // roles: [
-      //   { text: "Выберите категорию:", value: "" },
-      //   { text: "Заказчик", value: "customer" },
-      //   { text: "Подрядчик", value: "contractor" }
-      // ],
-      roles: [
-        { text: "Выберите категорию:", value: "" },
-        "Заказчик",
-        "Подрядчик"
+      roles: ["Выберите категорию:", "Заказчик", "Подрядчик", "Сетевая компания"
       ],
       show: true
     };
@@ -63,13 +65,19 @@ export default {
   methods: {
     onSubmit(evt) {
       evt.preventDefault();
+      if (this.form.role === "Выберите категорию:") this.form.role = "";
+      else if (this.form.role === "Заказчик") this.form.role = "customer";
+      else if (this.form.role === "Подрядчик") this.form.role = "contractor";
+      else if (this.form.role === "Сетевая компания") this.form.role = "company";
       this.token = this.login(
         this.form.role,
-        this.form.login,
-        this.form.password
+        this.form.email,
+        this.form.password,
+              this.form.cpassword
       );
+      router.push("/");
     },
-    login(user_type, email, password) {
+    login(user_type, email, password, cpassword) {
       const AXIOS = axios.create({
         baseURL: "http://10.20.35.154:5000",
         headers: {
@@ -80,7 +88,8 @@ export default {
       AXIOS.post("/login", {
         user_type: user_type,
         email: email,
-        password: password
+        password: password,
+        cpassword: cpassword
       })
         .then(response => {
           localStorage.setItem("token", response.data.token);

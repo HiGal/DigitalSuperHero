@@ -1,6 +1,7 @@
 <template>
   <div class="registration_form">
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+    <b-form @submit="onSubmit" v-if="show">
+      <b-form-group label="Регистрация" class="reg"> </b-form-group>
       <b-form-group label="Название организации">
         <b-form-input
           id="company_name"
@@ -23,6 +24,15 @@
         <b-form-input
           id="password"
           v-model="form.password"
+          type="password"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group label="Подтвердите пароль">
+        <b-form-input
+          id="сpassword"
+          v-model="form.cpassword"
           type="password"
           required
         ></b-form-input>
@@ -57,14 +67,18 @@
 
 <script>
 import moment from "moment";
+import router from "../router";
+import axios from "axios";
 export default {
   name: "registration_contractor",
   data() {
     return {
       form: {
+        user_type: "contractor",
         company_name: "",
         email: "",
         password: "",
+        cpassword: "",
         phone: "",
         inn: "",
         date: moment(new Date()).format("YYYY-MM-DD")
@@ -75,7 +89,52 @@ export default {
   methods: {
     onSubmit(evt) {
       evt.preventDefault();
-      alert(JSON.stringify(this.form));
+      this.token = this.register(
+        this.form.user_type,
+        this.form.company_name,
+        this.form.email,
+        this.form.password,
+        this.form.cpassword,
+        this.form.phone,
+        this.form.inn,
+        this.form.date
+      );
+      router.push("/");
+    },
+    register(
+      user_type,
+      company_name,
+      email,
+      password,
+      cpassword,
+      phone,
+      inn,
+      date
+    ) {
+      const AXIOS = axios.create({
+        baseURL: "http://10.20.35.154:5000",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8"
+        }
+      });
+
+      AXIOS.post("/register", {
+        user_type: user_type,
+        email: email,
+        password: password,
+        cpassword: cpassword,
+        phone: phone,
+        inn: inn,
+        company_name: company_name,
+        reg_date: date
+      })
+        .then(response => {
+          localStorage.setItem("token", response.data.token);
+        })
+        .catch(() => {
+          localStorage.removeItem("token");
+        });
+      return localStorage.getItem("token");
     }
   }
 };

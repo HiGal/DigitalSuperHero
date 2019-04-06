@@ -1,6 +1,7 @@
 <template>
   <div class="registration_form">
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+    <b-form @submit="onSubmit" v-if="show">
+      <b-form-group label="Регистрация" class="reg"> </b-form-group>
       <b-form-group label="Имя">
         <b-form-input id="name" v-model="form.name" required></b-form-input>
       </b-form-group>
