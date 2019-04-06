@@ -1,0 +1,4 @@
+DATABASE_NAME = 'df3k9h58jtkq1t'
+DATABASE_USER = 'cnjzxcuzefbrwq'
+DATABASE_PASSWORD = '426012769dd618780b9c244fb2a8245e379022d34feed108e829d1fb3034ad07'
+DATABASE_HOST = 'ec2-54-247-70-127.eu-west-1.compute.amazonaws.com'
