@@ -34,18 +34,15 @@ img {
 
 .header-top {
 
-    min-height: 140px;
+    max-height: 120px;
     padding: 43px 0 40px;
 }
 
 .header-top a {
     width: 203px;
     height: 54px;
-
     background: url(http://gridcom-rt.ru.opt-css.1c-bitrix-cdn.ru/bitrix/templates/gridcom2/images/logo.png) left top no-repeat;
-
     display: block;
-
     margin-right: 20px;
 }
 
@@ -61,17 +58,35 @@ img {
 }
 
 .container {
-    width: 1000px;
-
+    width: 100%;
+    position: center;
 }
 
-.row{
+.container.navigation {
+    margin-left: 20%;
+}
+
+.row {
     padding-left: 12%;
     padding-right: 12%;
 }
 
 .text-right {
-
     text-align: right !important;
+}
 
+.home.content-img {
+    background: url("../content.jpg");
+    min-height: 300px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.item{
+    min-height: 300px;
+    object-fit: cover;
+}
+
+.home{
+    width: 100%;
 }
