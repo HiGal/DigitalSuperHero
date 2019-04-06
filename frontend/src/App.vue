@@ -13,3 +13,10 @@
 <style lang="css">
   @import "assets/css/style.css";
 </style>
+<script>
+    import Home from "./views/Home";
+    import Kanban from "./components/Kanban";
+    export default {
+        components: {Kanban, Home}
+    }
+</script>
