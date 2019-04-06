@@ -1,12 +1,9 @@
 from flask import Flask, Blueprint, Response, request
-from Models.User import User
+from Models.UserContractor import UserContractor
+from Models.UserCustomer import UserCustomer
+from Models.UserCompany import UserCompany
 
 login_page = Blueprint('login', __name__)
-
-
-def hash_password(password: str) -> str:
-    from hashlib import md5
-    return md5(password.encode()).hexdigest()
 
 
 @login_page.route('/')
@@ -18,29 +15,55 @@ def hello_world():
 def login():
     if request.method == 'POST':
         data = request.get_json(silent=True)
-        data['password'] = hash_password(data['password'])
-        user = User(data['username'], data['password'])
-        # session['user'] = (data['username'], data['password'])
-        if user.verify():
-            return Response('/profile')
-        else:
-            return Response("Username or Password incorrect")
+        if data['user_type'] == 'contractor':
+            user = UserContractor(data['email'], data['password'])
+            if user.verify():
+                return Response('/profile')
+            else:
+                return Response("Username or Password incorrect")
+        elif data['user_type'] == 'customer':
+            user = UserCustomer(data['email'], data['password'])
+            if user.verify():
+                return Response('/profile')
+            else:
+                return Response("Username or Password incorrect")
+        elif data['user_type'] == 'company':
+            user = UserCompany(data['email'], data['password'])
+            if user.verify():
+                return Response('/profile')
+            else:
+                return Response("Username or Password incorrect")
     return Response('login.html')
 
 
 @login_page.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        user = User()
         data = request.get_json(silent=True)
-        name = data['name']
-        sname = data['sname']
-        email = data['email']
-        bdate = data['bdate']
         if data['password'] == data['cpassword']:
-            password = hash_password(data['password'])
-            user.register(email, password, name, sname, email, bdate)
-            return Response("Account successfully created")
+            if data['user_type'] == 'contractor':
+                user = UserContractor(data['email'], data['password'])
+                phone = data['phone']
+                inn = data['inn']
+                company_name = data['company_name']
+                reg_date = data['reg_date']
+                user.register(data['email'], data['password'], phone, inn, company_name, reg_date)
+                return Response("Account successfully created")
+            elif data['user_type'] == 'customer':
+                user = UserCustomer(data['email'], data['password'])
+                phone = data['phone']
+                name = data['name']
+                surname = data['surname']
+                midname = data['midname']
+                user.register(data['email'], data['password'], phone, name, surname, midname)
+                return Response("Account successfully created")
+            elif data['user_type'] == 'company':
+                user = UserCompany(data['email'], data['password'])
+                company_name = data['company_name']
+                inn = data['inn']
+                user.register(data['email'], data['password'], company_name, inn)
+                return Response("Account successfully created")
         else:
             return Response("Password are not the same!")
+
     return Response('registration.html')
