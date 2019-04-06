@@ -1,9 +1,8 @@
 import hashlib
-import SecretConstants
 import psycopg2
 
-
 def db_connect():
+    import SecretConstants
     db_name = SecretConstants.DATABASE_NAME
     user = SecretConstants.DATABASE_USER
     password = SecretConstants.DATABASE_PASSWORD
