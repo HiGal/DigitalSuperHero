@@ -52,7 +52,11 @@ export default {
       //   { text: "Заказчик", value: "customer" },
       //   { text: "Подрядчик", value: "contractor" }
       // ],
-      roles:[{ text: "Выберите категорию:", value: "" }, "Заказчик", "Подрядчик"],
+      roles: [
+        { text: "Выберите категорию:", value: "" },
+        "Заказчик",
+        "Подрядчик"
+      ],
       show: true
     };
   },
