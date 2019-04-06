@@ -59,9 +59,10 @@ def register():
                 return Response("Account successfully created")
             elif data['user_type'] == 'company':
                 user = UserCompany(data['email'], data['password'])
+                phone = data['phone']
                 company_name = data['company_name']
                 inn = data['inn']
-                user.register(data['email'], data['password'], company_name, inn)
+                user.register(data['email'], data['password'], phone, company_name, inn)
                 return Response("Account successfully created")
         else:
             return Response("Password are not the same!")
