@@ -23,7 +23,8 @@ def db_connect():
 
 class Order:
 
-    def __init__(self, stage: OrderStage = None, task: str = None, customer_email: str = None, description: str = None,
+    def __init__(self, stage: OrderStage = None, task: str = None, customer_email: str = None,
+                 description: str = None,
                  attachments: bytes = None):
         self.id: int = -1
         self.stage: OrderStage = stage
@@ -55,10 +56,10 @@ class Order:
         self.description = description
         self.customer_email = customer_email
 
-    def retrieve(self, id: int):
+    def retrieve(self, order_id: int):
         cursor = self.conn.cursor()
         cursor.execute(
-            'SELECT stage, task, description, customer_email FROM orders WHERE id = %s', [id]
+            'SELECT stage, task, description, customer_email FROM orders WHERE id = %s', [order_id]
         )
 
         if cursor.rowcount == 0:
@@ -67,8 +68,8 @@ class Order:
         record = next(cursor)
         cursor.close()
 
-        self.id = id
-        self.stage = record[0]
+        self.id = order_id
+        self.stage = OrderStage[record[0].upper()]
         self.task = record[1]
         self.description = record[2]
         self.customer_email = record[3]
@@ -114,3 +115,25 @@ class Order:
         cursor.close()
 
         return record[0]
+
+    @staticmethod
+    def get_user_orders(customer_email: str):
+        conn = db_connect()
+        cursor = conn.cursor()
+        cursor.execute(
+            'SELECT id, stage, task, description FROM orders '
+            'WHERE customer_email = %s', [customer_email]
+        )
+
+        res = []
+        for i in cursor:
+            order = Order()
+            order.id = i[0]
+            order.stage = OrderStage[i[1].upper()]
+            order.task = i[2]
+            order.description = i[3]
+            res.append(order)
+
+        cursor.close()
+
+        return res
