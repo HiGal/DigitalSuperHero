@@ -18,19 +18,19 @@ def login():
         if data['user_type'] == 'contractor':
             user = UserContractor(data['email'], data['password'])
             if user.verify():
-                return Response('/profile')
+                return Response('contractor')
             else:
                 return Response("Username or Password incorrect")
         elif data['user_type'] == 'customer':
             user = UserCustomer(data['email'], data['password'])
             if user.verify():
-                return Response('/profile')
+                return Response('customer')
             else:
                 return Response("Username or Password incorrect")
         elif data['user_type'] == 'company':
             user = UserCompany(data['email'], data['password'])
             if user.verify():
-                return Response('/profile')
+                return Response('company')
             else:
                 return Response("Username or Password incorrect")
     return Response('login.html')
@@ -48,7 +48,7 @@ def register():
                 company_name = data['company_name']
                 reg_date = data['reg_date']
                 user.register(data['email'], data['password'], phone, inn, company_name, reg_date)
-                return Response("Account successfully created")
+                return Response('contractor')
             elif data['user_type'] == 'customer':
                 user = UserCustomer(data['email'], data['password'])
                 phone = data['phone']
@@ -56,15 +56,14 @@ def register():
                 surname = data['surname']
                 midname = data['midname']
                 user.register(data['email'], data['password'], phone, name, surname, midname)
-                return Response("Account successfully created")
+                return Response("customer")
             elif data['user_type'] == 'company':
                 user = UserCompany(data['email'], data['password'])
                 phone = data['phone']
                 company_name = data['company_name']
                 inn = data['inn']
                 user.register(data['email'], data['password'], phone, company_name, inn)
-                return Response("Account successfully created")
+                return Response("company")
         else:
             return Response("Password are not the same!")
-
     return Response('registration.html')
