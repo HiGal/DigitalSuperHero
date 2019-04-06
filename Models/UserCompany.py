@@ -15,10 +15,12 @@ def db_connect():
 
 
 class UserCompany:
-    def __init__(self, email: str = None, password: str = None, company: str = None, INN: str = None):
+    def __init__(self, email: str = None, password: str = None, phone: str = None, company: str = None,
+                 INN: str = None):
         self.conn = db_connect()
         self.email: str = email
         self.password: str = password if password is None else hash_password(password)
+        self.phone: str = phone
         self.company: str = company
         self.INN: str = INN
         self.verified: bool = False
@@ -43,7 +45,7 @@ class UserCompany:
         self.verified = True
         return True
 
-    def register(self, email: str, password: str, company: str, inn: str):
+    def register(self, email: str, password: str, phone: str, company: str, inn: str):
         self.email: str = email
         self.password: str = password
         self.company: str = company
@@ -53,9 +55,9 @@ class UserCompany:
 
         cursor = self.conn.cursor()
         cursor.execute(
-            'INSERT INTO user_company (email, password, company_name, nalog_id) '
-            'VALUES (\'{}\',\'{}\',\'{}\',\'{}\')'
-                .format(email, h_pass, company, inn)
+            'INSERT INTO user_company (email, password, phone, company_name, inn) '
+            'VALUES (\'{}\',\'{}\',\'{}\',\'{}\',\'{}\')'
+                .format(email, h_pass, phone, company, inn)
         )
         self.conn.commit()
         cursor.close()
@@ -78,5 +80,6 @@ class UserCompany:
 
         self.company = record[2]
         self.INN = record[3]
+        self.phone = record[4]
 
         return True
