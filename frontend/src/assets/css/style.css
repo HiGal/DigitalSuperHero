@@ -1,0 +1,14 @@
+.registration_form{
+     margin: 0 30% 0;
+     width: 40%;
+     position: fixed;
+}
+.login_form{
+    margin: 0 30% 0;
+    width: 40%;
+    position: fixed;
+}
+
+img{
+    width: 20%;
+}
