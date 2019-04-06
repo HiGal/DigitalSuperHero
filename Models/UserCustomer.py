@@ -1,72 +1,54 @@
-def hash_password(password: str) -> str:
-    from hashlib import md5
-    return md5(password.encode()).hexdigest()
+import hashlib
+import psycopg2
 
 
 def db_connect():
     import SecretConstants
-    import psycopg2
-    dbname = SecretConstants.DATABASE_NAME
+    db_name = SecretConstants.DATABASE_NAME
     user = SecretConstants.DATABASE_USER
     password = SecretConstants.DATABASE_PASSWORD
     host = SecretConstants.DATABASE_HOST
 
-    return psycopg2.connect(dbname=dbname, user=user, password=password, host=host)
+    return psycopg2.connect(dbname=db_name, user=user, password=password, host=host)
 
 
 class UserCustomer:
-    def __init__(self, email: str = None, password: str = None, phone: str = None, name: str = None,
-                 surname: str = None, midname: str = None):
+    phone = str
+    name = str
+    surname = str
+    midname = str
+
+    def __init__(self, email=None, password=None):
         self.conn = db_connect()
-        self.email: str = email
-        self.password: str = password if password is None else hash_password(password)
-        self.phone: str = phone
-        self.name: str = name
-        self.surname: str = surname
-        self.midname: str = midname
-        self.verified: bool = False
+        self.email = email
+        self.password = password if password is None else hashlib.md5(password.encode()).hexdigest()
 
     def verify(self) -> bool:
-        if self.verified:
+        cursor = self.conn.cursor()
+        cursor.execute('select * from user_customer where email = \'{}\' and password = \'{}\';'
+                       .format(self.email, self.password))
+        if cursor.rowcount == 0:
+            cursor.close()
+            return False
+        else:
+            cursor.close()
             return True
 
-        cursor = self.conn.cursor()
-        password = hash_password(self.password)
-        cursor.execute(
-            'SELECT * FROM user_customer WHERE email = \'{}\' AND password = \'{}\''
-                .format(self.email, password)
-        )
-
-        count = cursor.rowcount
-        cursor.close()
-
-        if count == 0:
-            self.verified = False
-            return False
-
-        self.verified = True
-        return True
-
     def register(self, email: str, password: str, phone: str, name: str, surname: str, midname: str):
-        self.email: str = email
-        self.password: str = password
-        self.phone: str = phone
-        self.name: str = name
-        self.surname: str = surname
-        self.midname: str = midname
-
-        h_pass = hash_password(password)
-
+        self.email = email
+        self.password = hashlib.md5(password.encode()).hexdigest()
+        self.phone = phone
+        self.name = name
+        self.surname = surname
+        self.midname = midname
         cursor = self.conn.cursor()
         cursor.execute(
             'INSERT INTO user_customer (email, password, phone, name, surname, midname) '
-            'VALUES (\'{}\',\'{}\',\'{}\',\'{}\',\'{}\',\'{}\')'
-                .format(email, h_pass, phone, name, surname, midname)
+            'VALUES (\'{}\',\'{}\',\'{}\',\'{}\',\'{}\',\'{}\')'.format(
+                self.email, self.password, self.phone, self.name, self.surname, self.midname)
         )
         self.conn.commit()
         cursor.close()
-
-        self.verified = True
 
     def retrieve(self) -> bool:
         cursor = self.conn.cursor()
@@ -88,3 +70,6 @@ class UserCustomer:
         self.midname = record[5]
 
         return True
+
+
+
