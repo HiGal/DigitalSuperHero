@@ -11,9 +11,9 @@
     position: fixed;
 }
 
-img {
-    width: 20%;
-}
+/*img {*/
+/*    width: 20%;*/
+/*}*/
 
 .reg {
     font-size: 25px;
@@ -82,11 +82,101 @@ img {
     width: 100%;
 }
 
-.item{
+.item {
     min-height: 300px;
     object-fit: cover;
 }
 
-.home{
+.home {
     width: 100%;
+}
+
+.jumbotron {
+    margin-top: 10px;
+    background: url("../content.jpg");
+    color: white;
+}
+
+span.flash-txt {
+    position: absolute;
+    left: 0;
+    top: 30%;
+    width: 100%;
+
+}
+
+#flash span {
+    display: block;
+}
+
+span.container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+
+}
+
+span.flash-back {
+    display: inline-block;
+    padding: 10px 20px;
+    width: 440px;
+    height: 155px;
+    position: relative;
+}
+
+body {
+    font-family: "Exo 2 Light", Helvetica, Arial, sans-serif;
+    font-size: 15px;
+
+    line-height: 1.42857143;
+
+    color: #333;
+}
+
+.flash-back a {
+    color: #fff;
+    font: normal 14px Arial;
+    display: inline-block;
+    border: 2px solid #fff;
+    border-radius: 30px;
+    padding: 13px 45px;
+    text-decoration: none;
+    margin-left: 22%;
+    position: absolute;
+    bottom: 15px;
+
+}
+
+
+.flash-back a:hover {
+    background-color: #fff;
+    border-color: #fff;
+    color: #0091d7;
+}
+
+.flash-back{
+    background-color: rgba(0,145,215,0.6);
+    margin-left: 10%;
+}
+
+.item{
+    max-height: 20px;
+    background: url("../content.jpg");
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.item img {
+
+}
+
+strong {
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+    font: normal 18px 'Exo 2 Medium';
+    margin-bottom: 8px;
+    display: block;
 }

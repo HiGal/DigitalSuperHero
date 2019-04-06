@@ -1,12 +1,17 @@
 <template>
     <div class="home">
-        <div class="container">
-            <b-jumbotron header="Хотите подключить ваш объект к электрической сети?" lead="Оставьте заявку на подключение!">
-                <b-button variant="primary" href="/login">Подать заявку</b-button>
-            </b-jumbotron>
-
+        <div class="item">
+            <span class="flash-txt">
+                <span class="container">
+                    <span class="flash-back">
+                        <strong>Оставьте заявку на подключение к сети</strong>
+                        <a href="/login">Оставить заявку</a>
+                    </span>
+                </span>
+            </span>
         </div>
     </div>
+
 </template>
 
 <script>
