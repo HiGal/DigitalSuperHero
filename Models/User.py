@@ -3,6 +3,7 @@ import SecretConstants
 
 import psycopg2
 
+
 def db_connect():
     dbname = SecretConstants.DATABASE_NAME
     user = SecretConstants.DATABASE_USER
@@ -38,8 +39,7 @@ class User:
         cursor = self.conn.cursor()
         cursor.execute(
             'insert into sys_user (username, password,name, surname, email,birthday) '
-            'values (\'{}\',\'{}\',\'{}\',\'{}\',\'{}\',\'{}\');'
-                .format(username, password, name, sname, email, bdate)
+            'values (\'{}\',\'{}\',\'{}\',\'{}\',\'{}\',\'{}\');'.format(username, password, name, sname, email, bdate)
         )
         self.conn.commit()
         cursor.close()
