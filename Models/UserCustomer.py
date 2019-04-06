@@ -1,4 +1,17 @@
-from .User import db_connect, hash_password
+def hash_password(password: str) -> str:
+    from hashlib import md5
+    return md5(password.encode()).hexdigest()
+
+
+def db_connect():
+    import SecretConstants
+    import psycopg2
+    dbname = SecretConstants.DATABASE_NAME
+    user = SecretConstants.DATABASE_USER
+    password = SecretConstants.DATABASE_PASSWORD
+    host = SecretConstants.DATABASE_HOST
+
+    return psycopg2.connect(dbname=dbname, user=user, password=password, host=host)
 
 
 class UserCustomer:
