@@ -1,5 +1,6 @@
-from flask import Flask, Blueprint, Response, request, jsonify
+from flask import Blueprint, Response, request, jsonify
 from flask_cors import CORS
+
 from Models.Order import Order, OrderStage
 from Models.UserCompany import UserCompany
 

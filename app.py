@@ -1,9 +1,10 @@
 from flask import Flask
 from flask_cors import CORS
+
+from Controllers.board import kanban
 from Controllers.login import login_page
 from Controllers.marketplace import marketplace
 from Controllers.my_requests import requests
-from Controllers.board import kanban
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})

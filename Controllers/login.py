@@ -1,8 +1,9 @@
-from flask import Flask, Blueprint, Response, request, jsonify
+from flask import Blueprint, Response, request, jsonify
 from flask_cors import CORS
+
+from Models.UserCompany import UserCompany
 from Models.UserContractor import UserContractor
 from Models.UserCustomer import UserCustomer
-from Models.UserCompany import UserCompany
 
 login_page = Blueprint("login", __name__)
 CORS(login_page, resources={r"/*": {"origins": "*"}})
@@ -22,19 +23,19 @@ def login():
             if user.verify():
                 return jsonify(user.retrieve())
             else:
-                return Response("Username or Password incorrect",status=401)
+                return Response("Username or Password incorrect", status=401)
         elif data["user_type"] == "customer":
             user = UserCustomer(data["email"], data["password"])
             if user.verify():
                 return jsonify(user.retrieve())
             else:
-                return Response("Username or Password incorrect",status=401)
+                return Response("Username or Password incorrect", status=401)
         elif data["user_type"] == "company":
             user = UserCompany(data["email"], data["password"])
             if user.verify():
                 return jsonify(user.retrieve())
             else:
-                return Response("Username or Password incorrect",status=401)
+                return Response("Username or Password incorrect", status=401)
     return Response("login.html")
 
 
@@ -67,5 +68,5 @@ def register():
                 user.register(data["email"], data["password"], phone, company_name, inn)
                 return jsonify(user.retrieve())
         else:
-            return Response("Password are not the same!",status=401)
+            return Response("Password are not the same!", status=401)
     return Response("registration.html")
