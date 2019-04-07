@@ -126,6 +126,23 @@ class Order:
         # noinspection PyTypeChecker
         return self.change_stage(OrderStage(self.stage.value - 1))
 
+    def remove(self):
+        conn = db_connect()
+        cursor = conn.cursor()
+        cursor.execute(
+            'DELETE FROM orders WHERE id = %s', [self.id]
+        )
+        cursor.close()
+        conn.close()
+
+        self.id = -1
+        self.stage = None
+        self.task = None
+        self.description = None
+        self.attachments = None
+        self.customer_email = None
+        self.location = None
+
     def set_attachment(self, attachment: bytes):
         conn = db_connect()
         cursor = conn.cursor()
