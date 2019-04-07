@@ -9,6 +9,18 @@ class OrderStage(Enum):
     CHECK = 5
     DONE = 6
 
+    def __le__(self, other):
+        return self.value <= other.value
+
+    def __ge__(self, other):
+        return self.value >= other.value
+
+    def __lt__(self, other):
+        return self.value < other.value
+
+    def __gt__(self, other):
+        return self.value > other.value
+
 
 def db_connect():
     import SecretConstants
@@ -23,27 +35,27 @@ def db_connect():
 
 class Order:
 
-    def __init__(self, stage: OrderStage = None, task: str = None, customer_email: str = None,
-                 description: str = None,
-                 attachments: bytes = None):
+    def __init__(self, stage: OrderStage = None, task: str = None, description: str = None,
+                 customer_email: str = None, location: str = None, attachments: bytes = None):
         self.id: int = -1
         self.stage: OrderStage = stage
         self.task: str = task
         self.description: str = description
         self.customer_email: str = customer_email
+        self.location = location
 
         if bytes is None:
             self.attachments = b'0'
         else:
             self.attachments: bytes = attachments
 
-    def register(self, stage: OrderStage, task: str, description: str, customer_email: str):
+    def register(self, stage: OrderStage, task: str, description: str, customer_email: str, location: str):
         conn = db_connect()
         cursor = conn.cursor()
         cursor.execute(
-            'INSERT INTO orders (stage, task, description, customer_email) '
-            'VALUES (%s, %s, %s, %s) RETURNING id',
-            (stage.name.lower(), task, description, customer_email)
+            'INSERT INTO orders (stage, task, description, customer_email, location) '
+            'VALUES (%s, %s, %s, %s, %s) RETURNING id',
+            (stage.name.lower(), task, description, customer_email, location)
         )
         conn.commit()
 
@@ -55,12 +67,13 @@ class Order:
         self.task = task
         self.description = description
         self.customer_email = customer_email
+        self.location = location
 
     def retrieve(self, order_id: int):
         conn = db_connect()
         cursor = conn.cursor()
         cursor.execute(
-            'SELECT stage, task, description, customer_email FROM orders WHERE id = %s', [order_id]
+            'SELECT stage, task, description, customer_email, location FROM orders WHERE id = %s', [order_id]
         )
 
         if cursor.rowcount == 0:
@@ -75,11 +88,12 @@ class Order:
         self.task = record[1]
         self.description = record[2]
         self.customer_email = record[3]
+        self.location = record[4]
 
         return True
 
     def change_stage(self, new_stage: OrderStage) -> bool:
-        if abs(self.stage.value - new_stage.value) > 1:
+        if abs(self.stage.value - new_stage.value) > 1 or not (OrderStage.REQUESTS <= new_stage <= OrderStage.DONE):
             return False
 
         conn = db_connect()
@@ -93,6 +107,18 @@ class Order:
         self.stage = new_stage
 
         return True
+
+    def move_stage_next(self):
+        if self.stage >= OrderStage.DONE:
+            return False
+        # noinspection PyTypeChecker
+        return self.change_stage(OrderStage(self.stage.value + 1))
+
+    def move_stage_back(self):
+        if self.stage <= OrderStage.REQUESTS:
+            return False
+        # noinspection PyTypeChecker
+        return self.change_stage(OrderStage(self.stage.value - 1))
 
     def set_attachment(self, attachment: bytes):
         conn = db_connect()
@@ -127,7 +153,7 @@ class Order:
     def to_front_format(self):
         res = dict()
         res['id'] = self.id
-        res['location'] = 'Казанб'
+        res['location'] = self.location
         res['name'] = self.task
         res['info'] = self.description
         res['phone'] = '79871234567'
@@ -140,7 +166,7 @@ class Order:
         conn = db_connect()
         cursor = conn.cursor()
         cursor.execute(
-            'SELECT id, stage, task, description FROM orders '
+            'SELECT id, stage, task, description, location FROM orders '
             'WHERE customer_email = %s', [customer_email]
         )
 
@@ -151,6 +177,7 @@ class Order:
             order.stage = OrderStage[record[1].upper()]
             order.task = record[2]
             order.description = record[3]
+            order.location = record[4]
             res.append(order)
 
         cursor.close()
@@ -163,7 +190,7 @@ class Order:
         conn = db_connect()
         cursor = conn.cursor()
         cursor.execute(
-            'SELECT id, stage, task, description, customer_email FROM orders '
+            'SELECT id, stage, task, description, customer_email, location FROM orders '
             'WHERE stage = \'search\''
         )
 
@@ -175,6 +202,7 @@ class Order:
             order.task = record[2]
             order.description = record[3]
             order.customer_email = record[4]
+            order.location = record[5]
             res.append(order)
 
         cursor.close()
