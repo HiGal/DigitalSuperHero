@@ -1,9 +1,11 @@
-from flask import Flask, Blueprint, Response, request
+from flask import Flask, Blueprint, Response, request, jsonify
+from flask_cors import CORS
 from Models.UserContractor import UserContractor
 from Models.UserCustomer import UserCustomer
 from Models.UserCompany import UserCompany
 
 login_page = Blueprint("login", __name__)
+CORS(login_page)
 
 
 @login_page.route("/")
@@ -11,11 +13,10 @@ def hello_world():
     return "Hello World!"
 
 
-@login_page.route("/login", methods=["GET", "POST", "OPTIONS"])
+@login_page.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         data = request.get_json(silent=True)
-        print("Json: ", data)
         if data["user_type"] == "contractor":
             user = UserContractor(data["email"], data["password"])
             if user.verify():
@@ -34,18 +35,13 @@ def login():
                 return Response("company")
             else:
                 return Response("Username or Password incorrect")
-    elif request.method == "OPTIONS":
-        return {'Allow': 'POST'}, 200, \
-               {'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'POST, GET, OPTIONS'}
     return Response("login.html")
 
 
-@login_page.route("/register", methods=["GET", "POST", "OPTIONS"])
+@login_page.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
         data = request.get_json(silent=True)
-        print("Json: ", data)
         if data["password"] == data["cpassword"]:
             if data["user_type"] == "contractor":
                 user = UserContractor(data["email"], data["password"])
@@ -72,8 +68,4 @@ def register():
                 return Response("company")
         else:
             return Response("Password are not the same!")
-    elif request.method == "OPTIONS":
-        return {'Allow': 'POST'}, 200, \
-               {'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'POST, GET, OPTIONS'}
     return Response("registration.html")
