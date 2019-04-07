@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <b-navbar toggleable="lg" type="dark" variant="info">
+        <b-navbar toggleable="lg" type="dark" variant="info" class="my-navbar">
             <div class="container navigation" style="min-height: 50px;">
                 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
                 <b-collapse id="nav-collapse" is-nav>

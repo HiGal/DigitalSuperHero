@@ -1,15 +1,10 @@
 <template>
-    <div class="home">
-        <div class="item">
-            <span class="flash-txt">
-                <span class="container">
-                    <span class="flash-back">
-                        <strong>Оставьте заявку на подключение к сети</strong>
-                        <a href="/profile">Оставить заявку</a>
-                    </span>
-                </span>
-            </span>
-        </div>
+    <div>
+        <b-jumbotron lead="Пожалуй, лучшая биржа труда в истории электроэнергетики">
+            <p>Найди подрядчика или работодателя.</p>
+            <p>Быстро, удобно, недорого.</p>
+            <b-button variant="primary" href="/profile">Начать работу</b-button>
+        </b-jumbotron>
     </div>
 
 </template>
@@ -19,8 +14,7 @@
     export default {
         name: "home",
         components: {},
-        created: function() {
-
+        created: function () {
         }
     };
 </script>

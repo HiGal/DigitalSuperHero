@@ -59,15 +59,21 @@
                     <ul>
                         <div class="idBtn" hidden>{{row.item.id}}</div>
                         <h6>{{row.item.info}}</h6>
-                        <h6>Полное ТУ: <a href="https://drive.google.com/uc?export=download&id=1WQNuiQjtQG_YY2QBn6geF-Xfl9OaTQ8m">Файл</a></h6>
-                        <h6>Контактная информация:</h6>
+                        <h6>Полное ТУ: <a
+                                href="https://drive.google.com/uc?export=download&id=1WQNuiQjtQG_YY2QBn6geF-Xfl9OaTQ8m">Скачать файл</a>
+                        </h6>
+                        <h6>Контактная информация заказчика:</h6>
                         <p>• {{row.item.name}}</p>
                         <p>• Номер телефона: {{row.item.phone}}</p>
                         <p>• E-mail: {{row.item.email}}</p>
 
-                        <b-button class="btn-primary btn-info" @click="popUp">
-                            Откликнуться на заявку
-                        </b-button>
+                        <b-button v-b-modal.modal-1>Откликнуться на заявку</b-button>
+                        <b-modal id="modal-1" title="Выполнить заявку">
+                            <p>Пожалуйста, укажите стоимость Ваших услуг:</p>
+                            <input type="text" class="text1"/>
+                            <p>Укажите примерное время выполнения работы:</p>
+                            <input type="text" class="text2"/>
+                        </b-modal>
                     </ul>
                 </b-card>
             </template>
@@ -173,6 +179,9 @@
                     })
             }
         },
+        created: function () {
+            this.getRequests();
+        },
         methods: {
             info(item, index, button) {
                 this.modalInfo.title = `Row index: ${index}`;
@@ -188,22 +197,27 @@
                 this.totalRows = filteredItems.length;
                 this.currentPage = 1
             },
-            popUp(e) {
+            /*popUp(e) {
                 //$(document).ready(function(){});
                 var element = e.target.parentElement.getElementsByTagName('div')[0];
                 var id = element.innerText;
                 var data = NaN;
-                // for (let i = 0; i < items.length; i++) {
-                //     if (items[i]['id'] == id) {
-                //         data = items[i];
-                //         break;
-                //     }
-                // }
-                // <a href="#details" class="btn btn-primary btn-lg" data-toggle="modal">Show details</a>
-                //
-                // <div class="modal" id="details" tabindex="-1" role="dialog" aria-labelledby="expansion"
-
-                $('#myModal').modal('show');
+                //$('#myModal').modal('show');
+            },*/
+            getRequests: function () {
+                const AXIOS = axios.create({
+                    baseURL: "http://10.20.35.154:5000",
+                    headers: {
+                        Authorization: "JWT " + localStorage.getItem("role"),
+                        "Content-Type": "application/json; charset=UTF-8",
+                        "Access-Control-Allow-Origin": "*"
+                    }
+                });
+                AXIOS.get("/marketplace").then(response => {
+                    this.items = response.data;
+                    this.totalRows = this.items.length;
+                    console.log(this.items)
+                });
             }
         }
     }

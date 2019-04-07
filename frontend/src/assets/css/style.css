@@ -29,12 +29,6 @@
     color: black;
     font-size: 25px;
 }
-.dropdown{
-    margin-top: 0%;
-    margin-bottom: 0%;
-    margin-right: 0%;
-    margin-left: fill;
-}
 .header-top {
 
     max-height: 120px;
@@ -58,6 +52,7 @@
 #telephone {
     font: normal 25px 'Exo 2 Semi Bold';
     color: #333;
+    position: fixed;
 }
 
 .container {
@@ -90,11 +85,13 @@
     min-height: 300px;
     object-fit: cover;
 }
-
 .jumbotron {
-    margin-top: 10px;
-    background: url("../content.jpg");
-    color: white;
+    background-image: url("../content.jpg");
+    background-size: cover;
+    height: 450px;
+    color: black;
+    text-align: center;
+    font-size: 40px;
 }
 
 span.flash-txt {
