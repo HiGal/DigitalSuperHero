@@ -8,9 +8,11 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 
 
+
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
 Vue.use(vueKanban);
+Vue.use(require('vue-faker'),{locale:'ru'});
 
 new Vue({
   router,
