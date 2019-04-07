@@ -184,6 +184,15 @@ class Order:
 
         return res
 
+    def to_board_format(self):
+        res = dict()
+        res['id'] = self.id
+        res['description'] = self.description
+        res['task'] = self.task
+        res['email'] = self.customer_email
+
+        return res
+
     @staticmethod
     def get_user_orders(customer_email: str):
         conn = db_connect()
