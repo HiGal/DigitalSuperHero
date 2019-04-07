@@ -30,20 +30,11 @@
                         placeholder="Пароль"
                 ></b-form-input>
             </b-form-group>
-            <b-form-group>
-                <b-form-input
-                        id="cpassword"
-                        v-model="form.cpassword"
-                        type="cpassword"
-                        required
-                        placeholder="Подтвердите пароль"
-                ></b-form-input>
-            </b-form-group>
             <b-button type="submit" variant="primary">Войти</b-button>
             <b-dropdown class="dropdown" right text="Регистрация" variant="info">
-                <b-dropdown-item variant="info">Зарегистрироваться как заказчик</b-dropdown-item>
+                <b-dropdown-item variant="info" href="/registration_customer">Зарегистрироваться как заказчик</b-dropdown-item>
                 <b-dropdown-divider></b-dropdown-divider>
-                <b-dropdown-item variant="info">Зарегистрироваться как подрядчик</b-dropdown-item>
+                <b-dropdown-item variant="info" href="/registration_contractor">Зарегистрироваться как подрядчик</b-dropdown-item>
             </b-dropdown>
         </b-form>
     </div>
@@ -61,7 +52,6 @@
                     role: "",
                     email: "",
                     password: "",
-                    cpassword: ""
                 },
                 roles: ["Заказчик", "Подрядчик", "Сетевая компания"
                 ],
@@ -78,14 +68,13 @@
                 this.token = this.login(
                     this.form.role,
                     this.form.email,
-                    this.form.password,
-                    this.form.cpassword
+                    this.form.password
                 );
                 router.push("/");
             },
-            login(user_type, email, password, cpassword) {
+            login(user_type, email, password) {
                 const AXIOS = axios.create({
-                    baseURL: "http://10.20.35.154:5000",
+                    baseURL: "http://10.20.35.161:5000",
                     headers: {
                         "Content-Type": "application/json; charset=UTF-8"
                     }
@@ -94,8 +83,7 @@
                 AXIOS.post("/login", {
                     user_type: user_type,
                     email: email,
-                    password: password,
-                    cpassword: cpassword
+                    password: password
                 })
                     .then(response => {
                         localStorage.setItem("token", response.data.token);

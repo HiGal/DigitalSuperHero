@@ -38,6 +38,12 @@ export default new Router({
                 import("./views/kanban_view.vue")
         },
         {
+            path: "/market",
+            name: "market",
+            component: () =>
+                import("./views/MarketPlace.vue")
+        },
+        {
             path: "/profile",
             name: "Profile",
             component: () =>

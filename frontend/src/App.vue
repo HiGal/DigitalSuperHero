@@ -7,9 +7,9 @@
                 </div>
                 <div class="col-8">
                     <div id="header-phone" class="pull-right text-right">
-                        <span id="phone">8 800 2000 878</span>
+                        <span id="telephone">8 800 2000 878</span>
                         <br>
-                        <span id="phone-cen">Единый контакт-центр</span>
+                        <span id="telephone-cen">Единый контакт-центр</span>
                     </div>
                 </div>
             </div>

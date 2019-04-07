@@ -16,11 +16,13 @@
     "dragula": "^3.7.2",
     "faker": "^4.1.0",
     "jquery": "^1.9.1",
+    "jquery-ajax": "^2.1.4",
     "moment": "^2.24.0",
     "random": "^2.1.1",
     "react-native-gesture-handler": "^1.1.0",
     "react-navigation": "^3.6.1",
     "vue": "^2.6.10",
+    "vue-faker": "^1.0.1",
     "vue-kanban": "^1.4.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
