@@ -15,10 +15,8 @@ def hello_world():
 
 @login_page.route("/login", methods=["GET", "POST"])
 def login():
-    print(request.method)
     if request.method == "POST":
         data = request.get_json(silent=True)
-        print("Json: ", data)
         if data["user_type"] == "contractor":
             user = UserContractor(data["email"], data["password"])
             if user.verify():
@@ -44,7 +42,6 @@ def login():
 def register():
     if request.method == "POST":
         data = request.get_json(silent=True)
-        print("Json: ", data)
         if data["password"] == data["cpassword"]:
             if data["user_type"] == "contractor":
                 user = UserContractor(data["email"], data["password"])
