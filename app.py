@@ -1,6 +1,6 @@
 from flask import Flask
 
-from Controllers.login import login_page
+from login import login_page
 from marketplace import marketplace
 
 app = Flask(__name__)
