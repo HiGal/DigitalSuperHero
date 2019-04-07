@@ -1,0 +1,192 @@
+.registration_form {
+    margin: 3% 30% 0;
+    width: 40%;
+}
+
+.login_form {
+    margin: 3% 30% 0;
+    width: 40%;
+    font-size: 25px;
+}
+
+/*img {*/
+/*    width: 20%;*/
+/*}*/
+
+.reg {
+    font-size: 25px;
+}
+
+.text {
+    color: white;
+}
+
+.kanban {
+    margin: 3% 0 0;
+}
+
+.section h4 {
+    color: black;
+    font-size: 25px;
+}
+.header-top {
+
+    max-height: 120px;
+    padding: 43px 0 40px;
+}
+
+.header-top a {
+    width: 203px;
+    height: 54px;
+    background: url(http://gridcom-rt.ru.opt-css.1c-bitrix-cdn.ru/bitrix/templates/gridcom2/images/logo.png) left top no-repeat;
+    display: block;
+    margin-right: 20px;
+}
+
+#header-phone {
+    color: #78909c;
+    font: normal 13px 'Exo 2';
+    line-height: 20px;
+}
+
+#telephone {
+    font: normal 25px 'Exo 2 Semi Bold';
+    color: #333;
+    position: fixed;
+}
+
+.container {
+    width: 100%;
+    position: center;
+}
+
+.container.navigation {
+    margin-left: 20%;
+}
+
+.row {
+    padding-left: 12%;
+    padding-right: 12%;
+}
+
+.text-right {
+    text-align: right !important;
+}
+
+.home {
+    background-image: url("../content.jpg");
+    background-size: contain;
+    object-fit: cover;
+    width: 100%;
+    position: fixed;
+}
+
+.item {
+    min-height: 300px;
+    object-fit: cover;
+}
+.jumbotron {
+    background-image: url("../content.jpg");
+    background-size: cover;
+    height: 450px;
+    color: black;
+    text-align: center;
+    font-size: 40px;
+}
+
+span.flash-txt {
+    position: absolute;
+    left: 0;
+    top: 30%;
+    width: 100%;
+
+}
+
+#flash span {
+    display: block;
+}
+
+span.container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+
+}
+
+span.flash-back {
+    display: inline-block;
+    padding: 10px 20px;
+    width: 440px;
+    height: 155px;
+    position: fixed;
+}
+
+body {
+    font-family: "Exo 2 Light", Helvetica, Arial, sans-serif;
+    font-size: 15px;
+
+    line-height: 1.42857143;
+
+    color: #333;
+}
+
+.flash-back a {
+    color: #fff;
+    font: normal 14px Arial;
+    display: inline-block;
+    border: 2px solid #fff;
+    border-radius: 30px;
+    padding: 13px 45px;
+    text-decoration: none;
+    margin-left: 22%;
+    position: absolute;
+    bottom: 15px;
+
+}
+
+
+.flash-back a:hover {
+    background-color: #fff;
+    border-color: #fff;
+    color: #0091d7;
+}
+
+.flash-back{
+    background-color: rgba(0,145,215,0.6);
+    margin-left: 10%;
+}
+
+.item{
+    max-height: 20px;
+    background: url("../content.jpg");
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+
+strong {
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+    font: normal 18px 'Exo 2 Medium';
+    margin-bottom: 8px;
+    display: block;
+}
+
+.container.profile{
+    background-color:#F8F8F8 ;
+    font-size: 20px;
+}
+
+.img-profile{
+    margin-top: 7%;
+}
+
+.personal-info{
+    margin-top: 7%;
+}
+
+
+/*Kanban board style*/
