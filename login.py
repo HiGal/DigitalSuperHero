@@ -5,7 +5,7 @@ from Models.UserCustomer import UserCustomer
 from Models.UserCompany import UserCompany
 
 login_page = Blueprint("login", __name__)
-CORS(login_page)
+CORS(login_page, resources={r"/*": {"origins": "*"}})
 
 
 @login_page.route("/")
@@ -20,21 +20,21 @@ def login():
         if data["user_type"] == "contractor":
             user = UserContractor(data["email"], data["password"])
             if user.verify():
-                return Response("contractor")
+                return jsonify(user.retrieve())
             else:
-                return Response("Username or Password incorrect")
+                return Response("Username or Password incorrect",status=401)
         elif data["user_type"] == "customer":
             user = UserCustomer(data["email"], data["password"])
             if user.verify():
-                return Response("customer")
+                return jsonify(user.retrieve())
             else:
-                return Response("Username or Password incorrect")
+                return Response("Username or Password incorrect",status=401)
         elif data["user_type"] == "company":
             user = UserCompany(data["email"], data["password"])
             if user.verify():
-                return Response("company")
+                return jsonify(user.retrieve())
             else:
-                return Response("Username or Password incorrect")
+                return Response("Username or Password incorrect",status=401)
     return Response("login.html")
 
 
@@ -50,7 +50,7 @@ def register():
                 company_name = data["company_name"]
                 reg_date = data["reg_date"]
                 user.register(data["email"], data["password"], phone, inn, company_name, reg_date)
-                return Response("contractor")
+                return jsonify(user.retrieve())
             elif data["user_type"] == "customer":
                 user = UserCustomer(data["email"], data["password"])
                 phone = data["phone"]
@@ -58,14 +58,14 @@ def register():
                 surname = data["surname"]
                 midname = data["midname"]
                 user.register(data["email"], data["password"], phone, name, surname, midname)
-                return Response("customer")
+                return jsonify(user.retrieve())
             elif data["user_type"] == "company":
                 user = UserCompany(data["email"], data["password"])
                 phone = data["phone"]
                 company_name = data["company_name"]
                 inn = data["inn"]
                 user.register(data["email"], data["password"], phone, company_name, inn)
-                return Response("company")
+                return jsonify(user.retrieve())
         else:
-            return Response("Password are not the same!")
+            return Response("Password are not the same!",status=401)
     return Response("registration.html")
