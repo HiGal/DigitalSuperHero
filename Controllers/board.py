@@ -11,8 +11,23 @@ CORS(kanban)
 def board():
     if request.method == "POST":
         data = request.get_json(silent=True)
-        user = UserCompany(data["email"], data["password"])
-        if user.verify():
+        if data["action"] == "get":
+            user = UserCompany(data["email"], data["password"])
+            if user.verify():
+                orders = {}
+                for stage in OrderStage:
+                    stage_orders = {}
+                    for order in Order.get_orders_by_stage(stage):
+                        stage_orders.update({"id": order.id,
+                                             "task": order.task,
+                                             "description": order.description,
+                                             "email": order.customer_email})
+                    orders.update({stage.stage_name(): stage_orders})
+                return jsonify(orders)
+        elif data["action"] == "del":
+            order = Order()
+            order.retrieve(data["id"])
+            order.remove()
             orders = {}
             for stage in OrderStage:
                 stage_orders = {}
@@ -20,8 +35,35 @@ def board():
                     stage_orders.update({"id": order.id,
                                          "task": order.task,
                                          "description": order.description,
-                                         "email": order.customer_email,
-                                         "stage": order.stage_name()})
+                                         "email": order.customer_email})
+                orders.update({stage.stage_name(): stage_orders})
+            return jsonify(orders)
+        elif data["action"] == "up":
+            order = Order()
+            order.retrieve(data["id"])
+            order.move_stage_next()
+            orders = {}
+            for stage in OrderStage:
+                stage_orders = {}
+                for order in Order.get_orders_by_stage(stage):
+                    stage_orders.update({"id": order.id,
+                                         "task": order.task,
+                                         "description": order.description,
+                                         "email": order.customer_email})
+                orders.update({stage.stage_name(): stage_orders})
+            return jsonify(orders)
+        elif data["action"] == "down":
+            order = Order()
+            order.retrieve(data["id"])
+            order.move_stage_back()
+            orders = {}
+            for stage in OrderStage:
+                stage_orders = {}
+                for order in Order.get_orders_by_stage(stage):
+                    stage_orders.update({"id": order.id,
+                                         "task": order.task,
+                                         "description": order.description,
+                                         "email": order.customer_email})
                 orders.update({stage.stage_name(): stage_orders})
             return jsonify(orders)
     return Response("board.html")
