@@ -13,10 +13,6 @@ def db_connect():
 
 
 class UserContractor:
-    phone = str
-    inn = str
-    company_name = str
-    reg_date = str
 
     def __init__(self, email=None, password=None):
         self.conn = db_connect()
@@ -46,7 +42,7 @@ class UserContractor:
         self.conn.commit()
         cursor.close()
 
-    def retrieve(self) -> bool:
+    def retrieve(self):
         cursor = self.conn.cursor()
         cursor.execute(
             'SELECT * FROM user_customer '
@@ -59,9 +55,12 @@ class UserContractor:
 
         record = next(cursor)
         cursor.close()
-
-        self.phone = record[2]
-        self.inn = record[3]
-        self.company_name = record[4]
-        self.reg_date = record[5]
-        return True
+        data = {
+            'role': 'contractor',
+            'email': record[0],
+            'phone': record[2],
+            'inn': record[3],
+            'company_name': record[4],
+            'reg_date': record[5]
+        }
+        return data
