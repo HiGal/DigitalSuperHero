@@ -12,10 +12,6 @@
                 </h2>
             </div>
             <div v-for="item in blocks" :slot="item.id" :key="item.id">
-                <div>
-                    <strong>id:</strong> {{ item.id }}
-                </div>
-
                 <div class="ktext">
                     {{ item.title }}
                 </div>
@@ -47,10 +43,22 @@
 
             });
             AXIOS.post('/board',{
-                email: localStorage.getItem('user').email,
-                password: localStorage.getItem('user').password
+                action: 'get',
+                email: 'aaaa@aaaa.com',
+                password: 'parol'
             }).then(function (response) {
-                console.log(response);
+                console.log(response.data['ANALYSIS']);
+                // for (item in response.data){
+                //     let i = 0;
+                //
+                //     for(data_t in ){
+                //         this.blocks.push({
+                //             status: data_t[0],
+                //
+                //         })
+                //     }
+                //     i++;
+                // }
             })
         },
         data() {

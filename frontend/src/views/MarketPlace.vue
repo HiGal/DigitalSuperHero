@@ -60,7 +60,7 @@
                         <div class="idBtn" hidden>{{row.item.id}}</div>
                         <h6>{{row.item.info}}</h6>
                         <h6>Полное ТУ: <a href="https://drive.google.com/uc?export=download&id=1WQNuiQjtQG_YY2QBn6geF-Xfl9OaTQ8m">Файл</a></h6>
-                        <h6>Контактная информация подрядчика:</h6>
+                        <h6>Контактная информация:</h6>
                         <p>• {{row.item.name}}</p>
                         <p>• Номер телефона: {{row.item.phone}}</p>
                         <p>• E-mail: {{row.item.email}}</p>
@@ -120,7 +120,6 @@
         "info": "~Дополнительная информация~",
         "phone": "79999999999",
         "email": "example@abc.com",
-        "status": "Выполняется"
     },
         {
             "id": 345,
@@ -128,7 +127,8 @@
             "name": "Имя 2",
             "info": "~Дополнительная информация~",
             "phone": "79999999999",
-            "email": "example@example.com"
+            "email": "example@example.com",
+
         },
         {
             "id": 567,
@@ -136,7 +136,7 @@
             "name": "Имя 3",
             "info": "~Дополнительная информация~",
             "phone": "79999999999",
-            "email": "example@example.com"
+            "email": "example@example.com",
         },
         {
             "id": 789,
@@ -144,7 +144,7 @@
             "name": "Имя ",
             "info": "~Дополнительная информация~",
             "phone": "79999999999",
-            "email": "example@example.com"
+            "email": "example@example.com",
         }];
 
     export default {

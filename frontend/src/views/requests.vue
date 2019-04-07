@@ -27,14 +27,17 @@
                         <ul>
                             <div class="idBtn" hidden>{{row.item.id}}</div>
                             <h6>{{row.item.info}}</h6>
-                            <h6>Полное ТУ: <a href="https://drive.google.com/uc?export=download&id=1WQNuiQjtQG_YY2QBn6geF-Xfl9OaTQ8m">Файл</a></h6>
-                            <h6>Контактная информация:</h6>
-                            <p>• {{row.item.name}}</p>
-                            <p>• Номер телефона: {{row.item.phone}}</p>
-                            <p>• E-mail: {{row.item.email}}</p>
+                            <h6>Полное ТУ: <a
+                                    href="https://drive.google.com/uc?export=download&id=1WQNuiQjtQG_YY2QBn6geF-Xfl9OaTQ8m">Файл</a>
+                            </h6>
+                            <h6>Контактная информация подрядчика:</h6>
+                            <ol>• {{row.item.name}}</ol>
+                            <ol>• Номер телефона: {{row.item.phone}}</ol>
+                            <ol>• E-mail: {{row.item.email}}</ol>
+                            <br>
 
                             <b-button class="btn-primary btn-info" @click="popUp">
-                                Откликнуться на заявку
+                                {{row.item.status}}
                             </b-button>
                         </ul>
                     </b-card>
@@ -62,36 +65,44 @@
 <script>
 
     const items = [{
-        "id": 123,
+        "id": 1,
         "location": "Казань",
         "name": "Имя 1",
         "info": "~Дополнительная информация~",
         "phone": "79999999999",
-        "email": "example@abc.com"
+        "email": "example@abc.com",
+        "status": "Выполняется"
+
     },
         {
-            "id": 345,
+            "id": 2,
             "location": "Казань",
             "name": "Имя 2",
             "info": "~Дополнительная информация~",
             "phone": "79999999999",
-            "email": "example@example.com"
+            "email": "example@example.com",
+            "status": "Техническая экспертиза"
+
         },
         {
-            "id": 567,
+            "id": 3,
             "location": "Казань",
             "name": "Имя 3",
             "info": "~Дополнительная информация~",
             "phone": "79999999999",
-            "email": "example@example.com"
+            "email": "example@example.com",
+            "status": "Выполнено"
+
         },
         {
-            "id": 789,
+            "id": 4,
             "location": "Казань",
             "name": "Имя ",
             "info": "~Дополнительная информация~",
             "phone": "79999999999",
-            "email": "example@example.com"
+            "email": "example@example.com",
+            "status": "Ожидает ответа заказчика"
+
         }];
 
     export default {
