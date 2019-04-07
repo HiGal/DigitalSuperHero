@@ -30,15 +30,21 @@
 </template>
 
 <script>
-    import faker from 'faker'
-    import random from 'random'
+    import faker from 'faker';
+    import random from 'random';
+    import router from "../router";
 
     export default {
         name: "Profile",
         data() {
             return {
-                blocks: []
+                blocks: [],
+                role:
+                    localStorage.getItem("role") === null ? "" : localStorage.getItem("role"),
             }
+        },
+        created: function() {
+            if (this.role === "") router.push("/login");
         },
         mounted() {
             this.blocks.push({

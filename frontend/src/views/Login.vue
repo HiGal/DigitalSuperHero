@@ -58,6 +58,7 @@
                 show: true
             };
         },
+
         methods: {
             onSubmit(evt) {
                 evt.preventDefault();
@@ -65,18 +66,20 @@
                 else if (this.form.role === "Подрядчик") this.form.role = "contractor";
                 else if (this.form.role === "Сетевая компания") this.form.role = "company";
                 else this.form.role = "";
-                this.token = this.login(
+                this.role = this.login(
                     this.form.role,
                     this.form.email,
                     this.form.password
                 );
-                router.push("/");
+                router.push("/profile");
             },
             login(user_type, email, password) {
                 const AXIOS = axios.create({
-                    baseURL: "http://10.20.35.161:5000",
+                    baseURL: "http://10.20.35.154:5000",
                     headers: {
-                        "Content-Type": "application/json; charset=UTF-8"
+                        Authorization: "JWT " + localStorage.getItem("role"),
+                        "Content-Type": "application/json; charset=UTF-8",
+                        "Access-Control-Allow-Origin": "*"
                     }
                 });
 
@@ -86,12 +89,14 @@
                     password: password
                 })
                     .then(response => {
-                        localStorage.setItem("token", response.data.token);
+                        localStorage.setItem("role", response.data.role);
+                        localStorage.setItem("email", response.data.email);
+                        console.log(localStorage.getItem("role"));
                     })
                     .catch(() => {
-                        localStorage.removeItem("token");
+                        localStorage.removeItem("role");
                     });
-                return localStorage.getItem("token");
+                return localStorage.getItem("role");
             }
         }
     };
