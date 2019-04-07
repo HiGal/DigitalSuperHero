@@ -150,7 +150,7 @@ class Order:
 
         return record[0]
 
-    def to_front_format(self):
+    def to_marketplace_format(self):
         res = dict()
         res['id'] = self.id
         res['location'] = self.location
@@ -186,12 +186,12 @@ class Order:
         return res
 
     @staticmethod
-    def get_search_orders():
+    def get_orders_by_stage(stage: OrderStage):
         conn = db_connect()
         cursor = conn.cursor()
         cursor.execute(
             'SELECT id, stage, task, description, customer_email, location FROM orders '
-            'WHERE stage = \'search\''
+            'WHERE stage = %s', [stage.name.lower()]
         )
 
         res = []
