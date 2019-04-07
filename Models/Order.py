@@ -124,8 +124,8 @@ class Order:
         conn = db_connect()
         cursor = conn.cursor()
         cursor.execute(
-            'UPDATE orders SET attachments = %s WHERE customer_email = %s',
-            (attachment, self.customer_email)
+            'UPDATE orders SET attachments = %s WHERE id = %s',
+            (attachment, self.id)
         )
         conn.commit()
         cursor.close()
