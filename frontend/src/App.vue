@@ -20,10 +20,10 @@
                 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
                 <b-collapse id="nav-collapse" is-nav>
                     <b-navbar-nav>
-                        <b-nav-item href="#">
+                        <b-nav-item href="#" align="left">
                             <router-link style="color: white" to="/">Главная</router-link>
                         </b-nav-item>
-                        <b-nav-item href="#">
+                        <b-nav-item href="#" align="right">
                             <router-link style="color: white" to="/profile">Личный кабинет</router-link>
                         </b-nav-item>
 
@@ -52,7 +52,7 @@
     </div>
 </template>
 <script>
-    import Login from "./views/Login.vue";
+    import Profile from "./views/Profile.vue";
     import Home from "./views/Home.vue";
 
 
@@ -72,7 +72,7 @@
             if (this.role === "company") this.isCompany = true;
             console.log(this.role);
         },
-        components: {Login, Home},
+        components: {Profile, Home},
         methods: {
             sendLogoutReq() {
                 localStorage.removeItem("role");
