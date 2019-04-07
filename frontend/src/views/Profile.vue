@@ -3,12 +3,14 @@
         <div class="row">
             <div class="col-6">
                 <div class="img-profile">
-                    <img src="../assets/profile.png" width="350" height="350">
+                    <img src="../assets/profile.jpg"  height="480">
+                    <br>
+                    <br>
                 </div>
             </div>
             <div class="col-6">
                 <div class="personal-info">
-                    <h3>{{blocks.surname}}Галеев {{blocks.name}}Фарит {{blocks.fathername}}Фарукович</h3>
+                    <h3>{{blocks.surname}}Громова {{blocks.name}}Анастасия {{blocks.fathername}}Александрова</h3>
                     <small>
                         <cite title="Казань, Россия">Казань, Россия</cite>
                         <i class="glyphicon glyphicon-map-marker">
