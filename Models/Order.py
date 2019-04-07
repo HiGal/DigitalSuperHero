@@ -37,19 +37,19 @@ class Order:
         else:
             self.attachments: bytes = attachments
 
-        self.conn = db_connect()
-
     def register(self, stage: OrderStage, task: str, description: str, customer_email: str):
-        cursor = self.conn.cursor()
+        conn = db_connect()
+        cursor = conn.cursor()
         cursor.execute(
             'INSERT INTO orders (stage, task, description, customer_email) '
             'VALUES (%s, %s, %s, %s) RETURNING id',
             (stage.name.lower(), task, description, customer_email)
         )
-        self.conn.commit()
+        conn.commit()
 
         self.id = cursor.fetchone()[0]
         cursor.close()
+        conn.close()
 
         self.stage = stage
         self.task = task
@@ -57,7 +57,8 @@ class Order:
         self.customer_email = customer_email
 
     def retrieve(self, order_id: int):
-        cursor = self.conn.cursor()
+        conn = db_connect()
+        cursor = conn.cursor()
         cursor.execute(
             'SELECT stage, task, description, customer_email FROM orders WHERE id = %s', [order_id]
         )
@@ -67,6 +68,7 @@ class Order:
 
         record = next(cursor)
         cursor.close()
+        conn.close()
 
         self.id = order_id
         self.stage = OrderStage[record[0].upper()]
@@ -80,30 +82,35 @@ class Order:
         if abs(self.stage.value - new_stage.value) > 1:
             return False
 
-        cursor = self.conn.cursor()
+        conn = db_connect()
+        cursor = conn.cursor()
         cursor.execute(
             'UPDATE orders SET stage = %s WHERE id = %s', (new_stage.name.lower(), self.id)
         )
-        self.conn.commit()
+        conn.commit()
         cursor.close()
+        conn.close()
         self.stage = new_stage
 
         return True
 
     def set_attachment(self, attachment: bytes):
-        cursor = self.conn.cursor()
+        conn = db_connect()
+        cursor = conn.cursor()
         cursor.execute(
             'UPDATE orders SET attachments = %s WHERE customer_email = %s',
             (attachment, self.customer_email)
         )
-        self.conn.commit()
+        conn.commit()
         cursor.close()
+        conn.close()
 
     def get_attachment(self) -> bytes:
         if self.attachments is not None:
             return self.attachments
 
-        cursor = self.conn.cursor()
+        conn = db_connect()
+        cursor = conn.cursor()
         cursor.execute(
             'SELECT attachments FROM orders WHERE id = %s', [self.id]
         )
@@ -113,8 +120,20 @@ class Order:
 
         record = next(cursor)
         cursor.close()
+        conn.close()
 
         return record[0]
+
+    def to_front_format(self):
+        res = dict()
+        res['id'] = self.id
+        res['location'] = 'Казанб'
+        res['name'] = self.task
+        res['info'] = self.description
+        res['phone'] = '79871234567'
+        res['email'] = self.customer_email
+
+        return res
 
     @staticmethod
     def get_user_orders(customer_email: str):
@@ -126,14 +145,39 @@ class Order:
         )
 
         res = []
-        for i in cursor:
+        for record in cursor:
             order = Order()
-            order.id = i[0]
-            order.stage = OrderStage[i[1].upper()]
-            order.task = i[2]
-            order.description = i[3]
+            order.id = record[0]
+            order.stage = OrderStage[record[1].upper()]
+            order.task = record[2]
+            order.description = record[3]
             res.append(order)
 
         cursor.close()
+        conn.close()
+
+        return res
+
+    @staticmethod
+    def get_search_orders():
+        conn = db_connect()
+        cursor = conn.cursor()
+        cursor.execute(
+            'SELECT id, stage, task, description, customer_email FROM orders '
+            'WHERE stage = \'search\''
+        )
+
+        res = []
+        for record in cursor:
+            order = Order()
+            order.id = record[0]
+            order.stage = record[1]
+            order.task = record[2]
+            order.description = record[3]
+            order.customer_email = record[4]
+            res.append(order)
+
+        cursor.close()
+        conn.close()
 
         return res
