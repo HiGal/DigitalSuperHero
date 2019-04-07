@@ -2,11 +2,11 @@ from flask import Flask, Blueprint, Response, request, jsonify
 from flask_cors import CORS
 from Models.Order import Order
 
-my_requests = Blueprint("my_requests", __name__)
-CORS(my_requests)
+requests = Blueprint("my_requests", __name__)
+CORS(requests)
 
 
-@my_requests.route("/my_requests", methods=["GET", "POST"])
+@requests.route("/my_requests", methods=["GET", "POST"])
 def my_requests():
     if request.method == "POST":
         data = request.get_json(silent=True)
