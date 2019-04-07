@@ -204,7 +204,7 @@ class Order:
         for record in cursor:
             order = Order()
             order.id = record[0]
-            order.stage = record[1]
+            order.stage = OrderStage[record[1].upper()]
             order.task = record[2]
             order.description = record[3]
             order.customer_email = record[4]
