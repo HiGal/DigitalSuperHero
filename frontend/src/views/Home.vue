@@ -5,7 +5,7 @@
                 <span class="container">
                     <span class="flash-back">
                         <strong>Оставьте заявку на подключение к сети</strong>
-                        <a href="/login">Оставить заявку</a>
+                        <a href="/profile">Оставить заявку</a>
                     </span>
                 </span>
             </span>

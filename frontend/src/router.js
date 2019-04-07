@@ -36,6 +36,12 @@ export default new Router({
             name: "kanban",
             component: () =>
                 import("./views/kanban_view.vue")
+        },
+        {
+            path: "/profile",
+            name: "Profile",
+            component: () =>
+                import("./views/Profile.vue")
         }
     ]
 });

@@ -9,7 +9,6 @@
             <div v-for="stage in statuses" :slot="stage" :key="stage">
                 <h2>
                     {{ stage }}
-                    <a>+</a>
                 </h2>
             </div>
             <div v-for="item in blocks" :slot="item.id" :key="item.id">

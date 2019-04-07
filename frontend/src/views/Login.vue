@@ -40,6 +40,11 @@
                 ></b-form-input>
             </b-form-group>
             <b-button type="submit" variant="primary">Войти</b-button>
+            <b-dropdown class="dropdown" right text="Регистрация" variant="info">
+                <b-dropdown-item variant="info">Зарегистрироваться как заказчик</b-dropdown-item>
+                <b-dropdown-divider></b-dropdown-divider>
+                <b-dropdown-item variant="info">Зарегистрироваться как подрядчик</b-dropdown-item>
+            </b-dropdown>
         </b-form>
     </div>
 </template>
@@ -58,7 +63,7 @@
                     password: "",
                     cpassword: ""
                 },
-                roles: ["Выберите категорию:", "Заказчик", "Подрядчик", "Сетевая компания"
+                roles: ["Заказчик", "Подрядчик", "Сетевая компания"
                 ],
                 show: true
             };
@@ -66,10 +71,10 @@
         methods: {
             onSubmit(evt) {
                 evt.preventDefault();
-                if (this.form.role === "Выберите категорию:") this.form.role = "";
-                else if (this.form.role === "Заказчик") this.form.role = "customer";
+                if (this.form.role === "Заказчик") this.form.role = "customer";
                 else if (this.form.role === "Подрядчик") this.form.role = "contractor";
                 else if (this.form.role === "Сетевая компания") this.form.role = "company";
+                else this.form.role = "";
                 this.token = this.login(
                     this.form.role,
                     this.form.email,
