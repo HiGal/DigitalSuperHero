@@ -25,41 +25,12 @@
     import faker from 'faker';
     import {debounce} from 'lodash';
     import Kanban from '../components/Kanban';
-    import axios from 'axios';
+    // import axios from 'axios';
 
     export default {
         name: "kanban",
         components: {
             Kanban,
-        },
-        created: function (){
-            const AXIOS = axios.create({
-                baseURL: 'http://10.20.35.154:5000',
-                headers: {
-                    Authorization: "JWT " + localStorage.getItem("role"),
-                    "Content-Type": "application/json; charset=UTF-8",
-                    "Access-Control-Allow-Origin": "*"
-                }
-
-            });
-            AXIOS.post('/board',{
-                action: 'get',
-                email: 'aaaa@aaaa.com',
-                password: 'parol'
-            }).then(function (response) {
-                console.log(response.data['ANALYSIS']);
-                // for (item in response.data){
-                //     let i = 0;
-                //
-                //     for(data_t in ){
-                //         this.blocks.push({
-                //             status: data_t[0],
-                //
-                //         })
-                //     }
-                //     i++;
-                // }
-            })
         },
         data() {
             return {
@@ -70,13 +41,69 @@
             };
         },
         mounted() {
-            for (let i = 0; i <= 20; i += 1) {
-                this.blocks.push({
-                    id: i,
-                    status: this.statuses[Math.floor(Math.random() * 6)],
-                    title: faker.company.bs(),
-                });
-            }
+            // for (let i = 0; i <= 20; i += 1) {
+            //     this.blocks.push({
+            //         id: i,
+            //         status: this.statuses[Math.floor(Math.random() * 6)],
+            //         title: faker.company.bs(),
+            //     });
+            // }
+
+            this.blocks.push({
+                id: 1,
+                status: this.statuses[1],
+                title: "Подключение ТЦ к узлу электропитания"
+            });
+
+            this.blocks.push({
+                id: 2,
+                status: this.statuses[0],
+                title: "Установка трансформатора на улице Гаврилова"
+            });
+
+            this.blocks.push({
+                id: 3,
+                status: this.statuses[0],
+                title: "Подключение новостройки к сети (15 Мв)"
+            });
+
+            this.blocks.push({
+                id: 4,
+                status: this.statuses[5],
+                title: "Подключение частного дома к сети"
+            });
+
+            this.blocks.push({
+                id: 5,
+                status: this.statuses[2],
+                title: "Подключение частного дома к сети"
+            });
+            // const AXIOS = axios.create({
+            //     baseURL: 'http://10.20.35.154:5000',
+            //     headers: {
+            //         Authorization: "JWT " + localStorage.getItem("role"),
+            //         "Content-Type": "application/json; charset=UTF-8",
+            //         "Access-Control-Allow-Origin": "*"
+            //     }
+            //
+            // });
+            // AXIOS.post('/board', {
+            //     action: 'get',
+            //     email: 'aaaa@aaaa.com',
+            //     password: 'parol'
+            // }).then(function (response) {
+            //     // console.log(response.data['ANALYSIS']);
+            //     var elements = response.data;
+            //
+            //     for (var element in elements) {
+            //         var data = elements[element];
+            //         this.blocks.push({
+            //             id: data.id,
+            //             status: 1,
+            //             title: data.task
+            //         })
+            //     }
+            // })
         },
         methods: {
             updateBlock: debounce(function (id, status) {
