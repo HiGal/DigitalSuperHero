@@ -91,7 +91,7 @@
         methods: {
             onSubmit(evt) {
                 evt.preventDefault();
-                this.token = this.register(
+                this.role = this.register(
                     this.form.user_type,
                     this.form.company_name,
                     this.form.email,
@@ -114,10 +114,11 @@
                 date
             ) {
                 const AXIOS = axios.create({
-                    baseURL: "http://10.20.35.161:5000",
+                    baseURL: "http://10.20.35.154:5000",
                     headers: {
-
-                        "Content-Type": "application/json; charset=UTF-8"
+                        Authorization: "JWT " + localStorage.getItem("role"),
+                        "Content-Type": "application/json; charset=UTF-8",
+                        "Access-Control-Allow-Origin": "*"
                     }
                 });
 
@@ -132,12 +133,13 @@
                     reg_date: date
                 })
                     .then(response => {
-                        localStorage.setItem("token", response.data.token);
+                        localStorage.setItem("role", response.data.role);
+                        localStorage.setItem("email", response.data.email);
                     })
                     .catch(() => {
-                        localStorage.removeItem("token");
+                        localStorage.removeItem("role");
                     });
-                return localStorage.getItem("token");
+                return localStorage.getItem("role");
             }
         }
     };

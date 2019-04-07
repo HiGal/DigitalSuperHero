@@ -24,29 +24,25 @@
                             <router-link style="color: white" to="/">Главная</router-link>
                         </b-nav-item>
                         <b-nav-item href="#">
-                            <router-link style="color: white" to="/login">Личный кабинет</router-link>
+                            <router-link style="color: white" to="/profile">Личный кабинет</router-link>
                         </b-nav-item>
 
-<!--                        <b-nav-item-dropdown-->
-<!--                                id="my-nav-dropdown"-->
-<!--                                text="Регистрация"-->
-<!--                                style="color: white"-->
-<!--                                extra-toggle-classes="nav-link-custom"-->
-<!--                                right-->
-<!--                        >-->
-<!--                            <b-dropdown-item href="#">-->
-<!--                                <router-link to="/registration_contractor">Зарегистрироваться как-->
-<!--                                    подрядчик-->
-<!--                                </router-link>-->
-<!--                            </b-dropdown-item>-->
-<!--                            <b-dropdown-divider></b-dropdown-divider>-->
-<!--                            <b-dropdown-item href="#">-->
-<!--                                <router-link to="/registration_customer">Зарегистрироваться как-->
-<!--                                    заказчик-->
-<!--                                </router-link>-->
-<!--                            </b-dropdown-item>-->
+                        <template v-if="isCompany || isContractor">
+                            <b-nav-item href="#">
+                                <router-link style="color: white" to="/market">Заявки</router-link>
+                            </b-nav-item>
+                        </template>
 
-<!--                        </b-nav-item-dropdown>-->
+                        <template v-if="isCompany">
+                            <b-nav-item href="#">
+                                <router-link style="color: white" to="/kanban">Управление задачами</router-link>
+                            </b-nav-item>
+                        </template>
+                        <template v-if="isCompany || isContractor || isCustomer">
+                            <b-nav-item href="#">
+                                <div style="color: white" class="top-name" v-on:click="sendLogoutReq()">Выйти</div>
+                            </b-nav-item>
+                        </template>
                     </b-navbar-nav>
                 </b-collapse>
             </div>
@@ -55,7 +51,37 @@
 
     </div>
 </template>
+<script>
+    import Login from "./views/Login.vue";
+    import Home from "./views/Home.vue";
 
+
+    export default {
+        data() {
+            return {
+                role:
+                    localStorage.getItem("role") === null ? "" : localStorage.getItem("role"),
+                isCustomer: false,
+                isContractor: false,
+                isCompany: false,
+            };
+        },
+        created: function () {
+            if (this.role === "customer") this.isCustomer = true;
+            if (this.role === "contractor") this.isContractor = true;
+            if (this.role === "company") this.isCompany = true;
+            console.log(this.role);
+        },
+        components: {Login, Home},
+        methods: {
+            sendLogoutReq() {
+                localStorage.removeItem("role");
+                localStorage.removeItem("email");
+                router.push("/home");
+            },
+        }
+    };
+</script>
 <style lang="css">
     @import "assets/kanban.scss";
     @import "assets/css/style.css";
