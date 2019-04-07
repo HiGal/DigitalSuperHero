@@ -20,9 +20,6 @@
                     {{ item.title }}
                 </div>
             </div>
-            <div v-for="stage in statuses" :key="stage" :slot="`footer-${stage}`">
-                <a href="" @click.prevent="() => addBlock(stage)">+ Add new block</a>
-            </div>
         </Kanban>
     </div>
 </template>
@@ -32,11 +29,29 @@
     import faker from 'faker';
     import {debounce} from 'lodash';
     import Kanban from '../components/Kanban';
+    import axios from 'axios';
 
     export default {
         name: "kanban",
         components: {
             Kanban,
+        },
+        created: function (){
+            const AXIOS = axios.create({
+                baseURL: 'http://10.20.35.154:5000',
+                headers: {
+                    Authorization: "JWT " + localStorage.getItem("role"),
+                    "Content-Type": "application/json; charset=UTF-8",
+                    "Access-Control-Allow-Origin": "*"
+                }
+
+            });
+            AXIOS.post('/board',{
+                email: localStorage.getItem('user').email,
+                password: localStorage.getItem('user').password
+            }).then(function (response) {
+                console.log(response);
+            })
         },
         data() {
             return {

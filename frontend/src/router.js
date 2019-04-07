@@ -48,6 +48,12 @@ export default new Router({
             name: "Profile",
             component: () =>
                 import("./views/Profile.vue")
+        },
+        {
+            path: "/requests",
+            name: "requests",
+            component: () =>
+                import("./views/requests.vue")
         }
     ]
 });

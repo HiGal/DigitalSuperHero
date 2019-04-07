@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-6">
                 <div class="img-profile">
-                    <img src="../assets/profile.jpg" width="350" height="350">
+                    <img src="../assets/profile.png" width="350" height="350">
                 </div>
             </div>
             <div class="col-6">
@@ -23,6 +23,7 @@
                         {{blocks.phone}}
                         +7 (906) 321-15-58
                     </p>
+                    <b-button class="btn btn-lg btn-primary" onclick="/requests">Мои заявки</b-button>
                 </div>
             </div>
         </div>

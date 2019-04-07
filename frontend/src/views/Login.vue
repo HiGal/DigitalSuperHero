@@ -32,9 +32,11 @@
             </b-form-group>
             <b-button type="submit" variant="primary">Войти</b-button>
             <b-dropdown class="dropdown" right text="Регистрация" variant="info">
-                <b-dropdown-item variant="info" href="/registration_customer">Зарегистрироваться как заказчик</b-dropdown-item>
+                <b-dropdown-item variant="info" href="/registration_customer">Зарегистрироваться как заказчик
+                </b-dropdown-item>
                 <b-dropdown-divider></b-dropdown-divider>
-                <b-dropdown-item variant="info" href="/registration_contractor">Зарегистрироваться как подрядчик</b-dropdown-item>
+                <b-dropdown-item variant="info" href="/registration_contractor">Зарегистрироваться как подрядчик
+                </b-dropdown-item>
             </b-dropdown>
         </b-form>
     </div>
@@ -74,9 +76,11 @@
             },
             login(user_type, email, password) {
                 const AXIOS = axios.create({
-                    baseURL: "http://10.20.35.161:5000",
+                    baseURL: 'http://10.20.35.154:5000',
                     headers: {
-                        "Content-Type": "application/json; charset=UTF-8"
+                        Authorization: "JWT " + localStorage.getItem("role"),
+                        "Content-Type": "application/json; charset=UTF-8",
+                        "Access-Control-Allow-Origin": "*"
                     }
                 });
 
