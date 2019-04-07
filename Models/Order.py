@@ -9,6 +9,9 @@ class OrderStage(Enum):
     CHECK = 5
     DONE = 6
 
+    def stage_name(self) -> str:
+        return self.name
+
     def __le__(self, other):
         return self.value <= other.value
 
@@ -91,6 +94,9 @@ class Order:
         self.location = record[4]
 
         return True
+
+    def stage_name(self) -> str:
+        return self.stage.stage_name()
 
     def change_stage(self, new_stage: OrderStage) -> bool:
         if abs(self.stage.value - new_stage.value) > 1 or not (OrderStage.REQUESTS <= new_stage <= OrderStage.DONE):
